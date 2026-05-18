@@ -1,0 +1,359 @@
+# =========================================================
+# PROYECTO FINAL - MÓDULO 3
+# SISTEMA DE GESTIÓN DE TIENDA DE VIDEOJUEGOS
+# =========================================================
+
+
+# DICCIONARIO PRINCIPAL DEL INVENTARIO
+# Aquí se guardan todos los videojuegos
+
+videojuegos = {
+
+    # Clave principal del videojuego
+    "VG001": {
+
+        # Nombre del videojuego
+        "nombre": "FIFA 26",
+
+        # Plataforma del videojuego
+        "plataforma": "PlayStation 5",
+
+        # Precio del videojuego
+        "precio": 250000,
+
+        # Cantidad disponible en inventario
+        "cantidad": 10
+    },
+
+    # Segundo videojuego
+    "VG002": {
+
+        # Nombre
+        "nombre": "Zelda: Breath of the Wild",
+
+        # Plataforma
+        "plataforma": "Nintendo Switch",
+
+        # Precio
+        "precio": 220000,
+
+        # Cantidad disponible
+        "cantidad": 5
+    },
+
+    # Tercer videojuego
+    "VG003": {
+
+        # Nombre
+        "nombre": "Forza Horizon 5",
+
+        # Plataforma
+        "plataforma": "Xbox Series X",
+
+        # Precio
+        "precio": 210000,
+
+        # Cantidad disponible
+        "cantidad": 8
+    }
+}
+
+
+# LISTA PARA GUARDAR EL HISTORIAL DE VENTAS
+# Cada venta nueva se agregará aquí
+
+historial_ventas = []
+
+
+# =========================================================
+# FUNCIÓN PARA VALIDAR NÚMEROS
+# =========================================================
+
+# Esta función sirve para validar si el usuario escribió números
+
+def validar_numero(numero):
+
+    # replace(".", "", 1)
+    # Reemplaza un punto decimal por vacío
+    # El 1 significa que solo reemplaza un punto
+
+    # isdigit() valida si el texto tiene solo números
+
+    if numero.replace(".", "", 1).isdigit():
+
+        # Retorna True si es número
+        return True
+
+    else:
+
+        # Retorna False si no es número
+        return False
+
+
+# =========================================================
+# FUNCIÓN: AGREGAR VIDEOJUEGO
+# =========================================================
+
+# Esta función agrega un nuevo videojuego
+
+def agregar_videojuego(videojuegos):
+
+    # Mostrar título
+    print("\n===== AGREGAR VIDEOJUEGO =====")
+
+    # Solicitar código
+    codigo = input("Ingrese el código del videojuego: ").upper()
+
+    # upper() convierte el texto a mayúsculas
+
+    # Validar si el código está vacío
+    if codigo == "":
+
+        # Mostrar error
+        print("❌ El código no puede estar vacío")
+
+        # Finalizar función
+        return
+
+    # Validar si el código ya existe
+    if codigo in videojuegos:
+
+        # Mostrar error
+        print("❌ El código ya existe")
+
+        # Salir de la función
+        return
+
+    # Solicitar nombre
+    nombre = input("Ingrese el nombre del videojuego: ")
+
+    # Validar nombre vacío
+    if nombre == "":
+
+        # Mostrar mensaje
+        print("❌ El nombre no puede estar vacío")
+
+        # Salir
+        return
+
+    # Solicitar plataforma
+    plataforma = input("Ingrese la plataforma: ")
+
+    # Validar plataforma vacía
+    if plataforma == "":
+
+        # Mostrar error
+        print("❌ La plataforma no puede estar vacía")
+
+        # Finalizar función
+        return
+
+    # Solicitar precio
+    precio = input("Ingrese el precio: ")
+
+    # Validar si el precio es numérico
+    if validar_numero(precio) == False:
+
+        # Mostrar error
+        print("❌ El precio debe ser numérico")
+
+        # Finalizar función
+        return
+
+    # Convertir precio a decimal
+    precio = float(precio)
+
+    # Validar que el precio sea mayor a 0
+    if precio <= 0:
+
+        # Mostrar error
+        print("❌ El precio debe ser mayor a 0")
+
+        # Finalizar función
+        return
+
+    # Solicitar cantidad
+    cantidad = input("Ingrese la cantidad disponible: ")
+
+    # isdigit() verifica si el texto contiene números enteros
+
+    # Validar cantidad numérica
+    if cantidad.isdigit() == False:
+
+        # Mostrar error
+        print("❌ La cantidad debe ser numérica")
+
+        # Finalizar función
+        return
+
+    # Convertir cantidad a entero
+    cantidad = int(cantidad)
+
+    # Validar que no sea negativa
+    if cantidad < 0:
+
+        # Mostrar error
+        print("❌ La cantidad no puede ser negativa")
+
+        # Salir
+        return
+
+    # Agregar nuevo videojuego al diccionario
+    videojuegos[codigo] = {
+
+        # Guardar nombre
+        "nombre": nombre,
+
+        # Guardar plataforma
+        "plataforma": plataforma,
+
+        # Guardar precio
+        "precio": precio,
+
+        # Guardar cantidad
+        "cantidad": cantidad
+    }
+
+    # Mensaje de éxito
+    print("✅ Videojuego agregado exitosamente")
+
+
+# =========================================================
+# FUNCIÓN: MOSTRAR INVENTARIO
+# =========================================================
+
+# Esta función muestra todos los videojuegos
+
+def mostrar_inventario(videojuegos):
+
+    # Mostrar título
+    print("\n===== INVENTARIO DE VIDEOJUEGOS =====")
+
+    # len() cuenta cuántos videojuegos hay
+
+    # Validar si el inventario está vacío
+    if len(videojuegos) == 0:
+
+        # Mostrar mensaje
+        print("❌ No hay videojuegos registrados")
+
+        # Finalizar función
+        return
+
+    # Mostrar línea decorativa
+    print("-" * 95)
+
+    # Mostrar encabezados de la tabla
+    print(f"{'CODIGO':<10} {'NOMBRE':<30} {'PLATAFORMA':<25} {'PRECIO':<12} {'STOCK':<10}")
+
+    # Mostrar línea decorativa
+    print("-" * 95)
+
+    # Recorrer el diccionario
+    # codigo guarda la clave
+    # datos guarda el contenido
+
+    for codigo, datos in videojuegos.items():
+
+        # Mostrar datos organizados
+        print(f"{codigo:<10} "
+              f"{datos['nombre']:<30} "
+              f"{datos['plataforma']:<25} "
+              f"${datos['precio']:<10,.0f} "
+              f"{datos['cantidad']:<10}")
+
+    # Mostrar línea final
+    print("-" * 95)
+
+
+# =========================================================
+# FUNCIÓN: BUSCAR VIDEOJUEGO
+# =========================================================
+
+# Esta función busca un videojuego por código
+
+def buscar_videojuego(videojuegos):
+
+    # Mostrar título
+    print("\n===== BUSCAR VIDEOJUEGO =====")
+
+    # Solicitar código
+    codigo = input("Ingrese el código del videojuego: ").upper()
+
+    # Validar si existe
+    if codigo in videojuegos:
+
+        # Guardar información encontrada
+        juego = videojuegos[codigo]
+
+        # Mostrar título
+        print("\n🎮 VIDEOJUEGO ENCONTRADO")
+
+        # Línea decorativa
+        print("-" * 40)
+
+        # Mostrar información
+        print(f"Código: {codigo}")
+        print(f"Nombre: {juego['nombre']}")
+        print(f"Plataforma: {juego['plataforma']}")
+        print(f"Precio: ${juego['precio']:,.0f}")
+        print(f"Cantidad disponible: {juego['cantidad']}")
+
+    else:
+
+        # Mostrar mensaje si no existe
+        print("❌ Videojuego no encontrado")
+
+
+# =========================================================
+# FUNCIÓN: ACTUALIZAR PRECIO
+# =========================================================
+
+# Esta función actualiza el precio de un videojuego
+
+def actualizar_precio(videojuegos):
+
+    # Mostrar título
+    print("\n===== ACTUALIZAR PRECIO =====")
+
+    # Solicitar código
+    codigo = input("Ingrese el código del videojuego: ").upper()
+
+    # Validar existencia
+    if codigo not in videojuegos:
+
+        # Mostrar error
+        print("❌ El videojuego no existe")
+
+        # Salir
+        return
+
+    # Solicitar nuevo precio
+    nuevo_precio = input("Ingrese el nuevo precio: ")
+
+    # Validar número
+    if validar_numero(nuevo_precio) == False:
+
+        # Mostrar error
+        print("❌ Debe ingresar un número válido")
+
+        # Finalizar función
+        return
+
+    # Convertir a decimal
+    nuevo_precio = float(nuevo_precio)
+
+    # Validar precio mayor a 0
+    if nuevo_precio <= 0:
+
+        # Mostrar error
+        print("❌ El precio debe ser mayor a 0")
+
+        # Salir
+        return
+
+    # Actualizar precio dentro del diccionario
+    videojuegos[codigo]["precio"] = nuevo_precio
+
+    # Mostrar mensaje
+    print("✅ Precio actualizado correctamente")

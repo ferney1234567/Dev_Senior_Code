@@ -193,7 +193,7 @@ cliente.mostrar_mascotas()
 mascota1.mostrar_info()
 mascota2.mostrar_info()
 
-veterinario = Veterinario("Carlos", "999", "Cirugia")
+veterinario = Veterinario("jose", "999", "Cirugia")
 veterinario.mostrar_rol()
 
 consulta = Consulta(mascota1, veterinario, "Dolor")
